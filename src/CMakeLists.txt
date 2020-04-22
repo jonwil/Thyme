@@ -23,6 +23,7 @@ set(GAMEENGINE_INCLUDES
     platform/audio/
     platform/directx/
     platform/video/
+    platform/w3dengine/client
     platform/w3dengine/common/thing
     w3d/lib
     w3d/math
@@ -169,6 +170,7 @@ set(GAMEENGINE_SRC
     platform/win32bigfilesystem.cpp
     platform/win32localfile.cpp
     platform/win32localfilesystem.cpp
+    platform/w3dengine/client/w3droadbuffer.cpp
     platform/w3dengine/common/thing/w3dmodulefactory.cpp
     w3d/lib/bufffileclass.cpp
     w3d/lib/chunkio.cpp
@@ -218,6 +220,10 @@ set(GAMEENGINE_SRC
     w3d/renderer/thumbnailmanager.cpp
     w3d/renderer/w3d.cpp
     w3d/renderer/w3dformat.cpp
+    w3d/renderer/assetmgr.cpp
+    w3d/renderer/dx8indexbuffer.cpp
+    w3d/renderer/dx8vertexbuffer.cpp
+    w3d/renderer/dx8fvf.cpp
 )
 
 # Game binary only source
