@@ -23,13 +23,13 @@ class VertexFormatXYZNDUV2;
 class VertexBufferClass;
 class VertexBufferLockClass
 {
-protected:
-    VertexBufferClass *VertexBuffer;
-    void *Vertices;
-
 public:
     VertexBufferLockClass(VertexBufferClass *VertexBuffer);
     void *Get_Vertex_Array() const { return Vertices; }
+
+protected:
+    VertexBufferClass *VertexBuffer;
+    void *Vertices;
 };
 
 class VertexBufferClass : public W3DMPO, public RefCountClass
@@ -49,12 +49,6 @@ public:
         ~AppendLockClass();
     };
 
-protected:
-    unsigned int type;
-    unsigned short VertexCount;
-    int engine_refs;
-    FVFInfoClass *fvf_info;
-
 public:
     VertexBufferClass(unsigned int type_, unsigned int FVF, unsigned short vertex_count_, unsigned int fvf_size);
     ~VertexBufferClass();
@@ -63,16 +57,17 @@ public:
     static unsigned int Get_Total_Buffer_Count();
     static unsigned int Get_Total_Allocated_Indices();
     static unsigned int Get_Total_Allocated_Memory();
+
+protected:
+    unsigned int type;
+    unsigned short VertexCount;
+    int engine_refs;
+    FVFInfoClass *fvf_info;
 };
 
 class DX8VertexBufferClass : public VertexBufferClass
 {
     IMPLEMENT_W3D_POOL(DX8VertexBufferClass)
-private:
-#ifdef BUILD_WITH_D3D8
-    IDirect3DVertexBuffer8 *VertexBuffer;
-#endif
-
 public:
     enum UsageType
     {
@@ -97,16 +92,21 @@ public:
     void Copy(Vector3 *loc, Vector3 *norm, Vector2 *uv, Vector4 *diffuse, unsigned int first_vertex, unsigned int count);
     void Copy(Vector3 *loc, Vector2 *uv, Vector4 *diffuse, unsigned int first_vertex, unsigned int count);
     void Create_Vertex_Buffer(UsageType usage);
+
+private:
+#ifdef BUILD_WITH_D3D8
+    IDirect3DVertexBuffer8 *VertexBuffer;
+#endif
 };
 
 class SortingVertexBufferClass : public VertexBufferClass
 {
-private:
-    VertexFormatXYZNDUV2 *VertexBuffer;
-
 public:
     ~SortingVertexBufferClass();
     SortingVertexBufferClass(unsigned short VertexCount);
+
+private:
+    VertexFormatXYZNDUV2 *VertexBuffer;
 };
 
 class DynamicVBAccessClass
@@ -114,21 +114,15 @@ class DynamicVBAccessClass
 public:
     class WriteLockClass
     {
-        DynamicVBAccessClass *DynamicVBAccess;
-        VertexFormatXYZNDUV2 *Vertices;
-
     public:
         WriteLockClass(DynamicVBAccessClass *dynamic_vb_access_);
         ~WriteLockClass();
         VertexFormatXYZNDUV2 *Get_Formatted_Vertex_Array() { return Vertices; }
-    };
 
-private:
-    FVFInfoClass &FVFInfo;
-    unsigned int Type;
-    unsigned short VertexCount;
-    unsigned short VertexBufferOffset;
-    VertexBufferClass *VertexBuffer;
+    private:
+        DynamicVBAccessClass *DynamicVBAccess;
+        VertexFormatXYZNDUV2 *Vertices;
+    };
 
 public:
     DynamicVBAccessClass(unsigned int t, unsigned int fvf, unsigned short vertex_count_);
@@ -138,4 +132,11 @@ public:
     static void _Reset(bool frame_changed);
     static void _Deinit();
     static unsigned short Get_Default_Vertex_Count();
+
+private:
+    FVFInfoClass &FVFInfo;
+    unsigned int Type;
+    unsigned short VertexCount;
+    unsigned short VertexBufferOffset;
+    VertexBufferClass *VertexBuffer;
 };

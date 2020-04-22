@@ -28,17 +28,6 @@ struct IRegion2D;
 
 class RoadType
 {
-private:
-    TextureClass *m_roadTexture;
-    DX8VertexBufferClass *m_vertexRoad;
-    DX8IndexBufferClass *m_indexRoad;
-    int m_numRoadVertices;
-    int m_numRoadIndices;
-    int m_uniqueID;
-    bool m_isAutoLoaded;
-    int m_stackingOrder;
-    Utf8String m_texturePath;
-
 public:
     RoadType();
     ~RoadType();
@@ -57,6 +46,17 @@ public:
     int isAutoLoaded() { return m_isAutoLoaded; }
     Utf8String getPath() { return m_texturePath; }
     void loadTestTexture();
+
+private:
+    TextureClass *m_roadTexture;
+    DX8VertexBufferClass *m_vertexRoad;
+    DX8IndexBufferClass *m_indexRoad;
+    int m_numRoadVertices;
+    int m_numRoadIndices;
+    int m_uniqueID;
+    bool m_isAutoLoaded;
+    int m_stackingOrder;
+    Utf8String m_texturePath;
 };
 
 struct TRoadPt
@@ -97,6 +97,21 @@ struct TRoadSegInfo
 
 class RoadSegment
 {
+public:
+    RoadSegment();
+    ~RoadSegment();
+    void SetVertexBuffer(VertexFormatXYZDUV1 *vb, int numVertex);
+    void SetIndexBuffer(unsigned short *ib, int numIndex);
+    void SetRoadSegInfo(TRoadSegInfo *info) { m_info = *info; }
+    void GetRoadSegInfo(TRoadSegInfo *info) { *info = m_info; }
+    SphereClass &getBounds() { return m_Bounds; }
+    int GetNumVertex() { return m_numVertex; }
+    int GetNumIndex() { return m_numIndex; }
+    int GetVertices(VertexFormatXYZDUV1 *destination_vb, int numToCopy);
+    int GetIndices(unsigned short *destination_ib, int numToCopy, int offset);
+    void updateSegLighting();
+    void flip();
+
 private:
     TRoadPt m_pt1;
     TRoadPt m_pt2;
@@ -112,44 +127,10 @@ private:
     unsigned short *m_ib;
     TRoadSegInfo m_info;
     SphereClass m_Bounds;
-
-public:
-    RoadSegment();
-    ~RoadSegment();
-    void SetVertexBuffer(VertexFormatXYZDUV1 *vb, int numVertex);
-    void SetIndexBuffer(unsigned short *ib, int numIndex);
-    void SetRoadSegInfo(TRoadSegInfo *info) { m_info = *info; }
-    void GetRoadSegInfo(TRoadSegInfo *info) { *info = m_info; }
-    SphereClass &getBounds() { return m_Bounds; }
-    int GetNumVertex() { return m_numVertex; }
-    int GetNumIndex() { return m_numIndex; }
-    int GetVertices(VertexFormatXYZDUV1 *destination_vb, int numToCopy);
-    int GetIndices(unsigned short *destination_ib, int numToCopy, int offset);
-    void updateSegLighting();
-    void flip();
 };
 
 class W3DRoadBuffer
 {
-private:
-    RoadType *m_roadTypes;
-    RoadSegment *m_roads;
-    int m_numRoads;
-    bool m_initialized;
-    WorldHeightMap *m_map;
-    RefMultiListIterator<RenderObjClass> *m_lightsIterator;
-    int m_curUniqueID;
-    int m_curRoadType;
-    int m_maxUID;
-    int m_curOpenRoad;
-    int m_maxRoadSegments;
-    int m_maxRoadVertex;
-    int m_maxRoadIndex;
-    int m_maxRoadTypes;
-    int m_curNumRoadVertices;
-    int m_curNumRoadIndices;
-    bool m_Dirty;
-
 public:
     W3DRoadBuffer();
     ~W3DRoadBuffer();
@@ -205,6 +186,25 @@ public:
     bool visibilityChanged(const IRegion2D &region);
     void updateCenter();
     void setDirty();
+
+private:
+    RoadType *m_roadTypes;
+    RoadSegment *m_roads;
+    int m_numRoads;
+    bool m_initialized;
+    WorldHeightMap *m_map;
+    RefMultiListIterator<RenderObjClass> *m_lightsIterator;
+    int m_curUniqueID;
+    int m_curRoadType;
+    int m_maxUID;
+    int m_curOpenRoad;
+    int m_maxRoadSegments;
+    int m_maxRoadVertex;
+    int m_maxRoadIndex;
+    int m_maxRoadTypes;
+    int m_curNumRoadVertices;
+    int m_curNumRoadIndices;
+    bool m_Dirty;
 };
 
 #ifdef GAME_DLL

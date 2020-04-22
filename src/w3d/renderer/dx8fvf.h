@@ -18,16 +18,6 @@
 
 class FVFInfoClass : public W3DMPO
 {
-private:
-    unsigned int FVF;
-    unsigned int fvf_size;
-    unsigned int location_offset;
-    unsigned int normal_offset;
-    unsigned int blend_offset;
-    unsigned int texcoord_offset[8];
-    unsigned int diffuse_offset;
-    unsigned int specular_offset;
-
 public:
     FVFInfoClass(unsigned int FVF_, unsigned int fvf_size_);
     unsigned int Get_Location_Offset() const { return location_offset; }
@@ -38,4 +28,14 @@ public:
     unsigned int Get_FVF() const { return FVF; }
     unsigned int Get_FVF_Size() const { return fvf_size; }
     void Get_FVF_Name(StringClass &fvfname) const;
+
+private:
+    unsigned int FVF;
+    unsigned int fvf_size;
+    unsigned int location_offset;
+    unsigned int normal_offset;
+    unsigned int blend_offset;
+    unsigned int texcoord_offset[8];
+    unsigned int diffuse_offset;
+    unsigned int specular_offset;
 };
