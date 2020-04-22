@@ -12,6 +12,7 @@
  *            A full copy of the GNU General Public License can be found in
  *            LICENSE
  */
+#pragma once
 #include "always.h"
 #include "vector2.h"
 #include "asciistring.h"
@@ -31,21 +32,21 @@ class RoadType
 public:
     RoadType();
     ~RoadType();
-    void loadTexture(Utf8String path, int ID);
-    void applyTexture();
-    int getStacking() { return m_stackingOrder; }
-    void setStacking(int stacking) { m_stackingOrder = stacking; }
-    int getUniqueID() { return m_uniqueID; }
-    DX8VertexBufferClass *getVB() { return m_vertexRoad; }
-    DX8IndexBufferClass *getIB() { return m_indexRoad; }
-    int getNumVertices() { return m_numRoadVertices; }
-    void setNumIndices(int indices) { m_numRoadIndices = indices; }
-    void setNumVertices(int vertices) { m_numRoadVertices = vertices; }
-    int getNumIndices() { return m_numRoadIndices; }
-    void setAutoLoaded() { m_isAutoLoaded = true; }
-    int isAutoLoaded() { return m_isAutoLoaded; }
-    Utf8String getPath() { return m_texturePath; }
-    void loadTestTexture();
+    void Load_Texture(Utf8String path, int ID);
+    void Apply_Texture();
+    int Get_Stacking() { return m_stackingOrder; }
+    void Set_Stacking(int stacking) { m_stackingOrder = stacking; }
+    int Get_Unique_ID() { return m_uniqueID; }
+    DX8VertexBufferClass *Get_VB() { return m_vertexRoad; }
+    DX8IndexBufferClass *Get_IB() { return m_indexRoad; }
+    int Get_Num_Vertices() { return m_numRoadVertices; }
+    void Set_Num_Indices(int indices) { m_numRoadIndices = indices; }
+    void Set_Num_Vertices(int vertices) { m_numRoadVertices = vertices; }
+    int Get_Num_Indices() { return m_numRoadIndices; }
+    void Set_Auto_Loaded() { m_isAutoLoaded = true; }
+    int Is_Auto_Loaded() { return m_isAutoLoaded; }
+    Utf8String Get_Path() { return m_texturePath; }
+    void Load_Test_Texture();
 
 private:
     TextureClass *m_roadTexture;
@@ -100,17 +101,17 @@ class RoadSegment
 public:
     RoadSegment();
     ~RoadSegment();
-    void SetVertexBuffer(VertexFormatXYZDUV1 *vb, int numVertex);
-    void SetIndexBuffer(unsigned short *ib, int numIndex);
-    void SetRoadSegInfo(TRoadSegInfo *info) { m_info = *info; }
-    void GetRoadSegInfo(TRoadSegInfo *info) { *info = m_info; }
-    SphereClass &getBounds() { return m_Bounds; }
-    int GetNumVertex() { return m_numVertex; }
-    int GetNumIndex() { return m_numIndex; }
-    int GetVertices(VertexFormatXYZDUV1 *destination_vb, int numToCopy);
-    int GetIndices(unsigned short *destination_ib, int numToCopy, int offset);
-    void updateSegLighting();
-    void flip();
+    void Set_Vertex_Buffer(VertexFormatXYZDUV1 *vb, int numVertex);
+    void Set_Index_Buffer(unsigned short *ib, int numIndex);
+    void Set_Road_Seg_Info(TRoadSegInfo *info) { m_info = *info; }
+    void Get_Road_Seg_Info(TRoadSegInfo *info) { *info = m_info; }
+    SphereClass &Get_Bounds() { return m_Bounds; }
+    int Get_Num_Vertex() { return m_numVertex; }
+    int Get_Num_Index() { return m_numIndex; }
+    int Get_Vertices(VertexFormatXYZDUV1 *destination_vb, int numToCopy);
+    int Get_Indices(unsigned short *destination_ib, int numToCopy, int offset);
+    void Update_Seg_Lighting();
+    void Flip();
 
 private:
     TRoadPt m_pt1;
@@ -134,58 +135,58 @@ class W3DRoadBuffer
 public:
     W3DRoadBuffer();
     ~W3DRoadBuffer();
-    void loadRoads();
-    void clearAllRoads();
-    void drawRoads(CameraClass *camera, TextureClass *cloudTexture, TextureClass *noiseTexture, int wireframe, int minX,
+    void Load_Roads();
+    void Clear_All_Roads();
+    void Draw_Roads(CameraClass *camera, TextureClass *cloudTexture, TextureClass *noiseTexture, int wireframe, int minX,
         int maxX, int minY, int maxY, RefMultiListIterator<RenderObjClass> *pDynamicLightsIterator);
-    void setMap(WorldHeightMap *pMap);
-    void updateLighting();
-    void addMapObjects();
-    void addMapObject(RoadSegment *pRoad, int updateTheCounts);
-    void adjustStacking(int topUniqueID, int bottomUniqueID);
-    int findCrossTypeJoinVector(Vector2 loc, Vector2 *joinVector, int uniqueID);
-    void insertCurveSegmentAt(int ndx1, int ndx2);
-    void insertCrossTypeJoins();
-    void miter(int ndx1, int ndx2);
-    void moveRoadSegTo(int fromNdx, int toNdx);
-    void checkLinkAfter(int ndx);
-    void checkLinkBefore(int ndx);
-    void updateCounts(RoadSegment *pRoad);
-    void updateCountsAndFlags();
-    void insertCurveSegments();
-    void insertTeeIntersections();
-    void insertTee(Vector2 loc, int index1, float scale);
-    int insertY(Vector2 loc, int index1, float scale);
-    void insert4Way(Vector2 loc, int index1, float scale);
-    void offset4Way(TRoadPt *pc1, TRoadPt *pc2, TRoadPt *pc3, TRoadPt *pr3, TRoadPt *pc4, Vector2 loc, Vector2 alignVector,
+    void Set_Map(WorldHeightMap *pMap);
+    void Update_Lighting();
+    void Add_Map_Objects();
+    void Add_Map_Object(RoadSegment *pRoad, int updateTheCounts);
+    void Adjust_Stacking(int topUniqueID, int bottomUniqueID);
+    int Find_Cross_Type_Join_Vector(Vector2 loc, Vector2 *joinVector, int uniqueID);
+    void Insert_Curve_Segment_At(int ndx1, int ndx2);
+    void Insert_Cross_Type_Joins();
+    void Miter(int ndx1, int ndx2);
+    void Move_Road_Seg_To(int fromNdx, int toNdx);
+    void Check_Link_After(int ndx);
+    void Check_Link_Before(int ndx);
+    void Update_Counts(RoadSegment *pRoad);
+    void Update_Counts_And_Flags();
+    void Insert_Curve_Segments();
+    void Insert_Tee_Intersections();
+    void Insert_Tee(Vector2 loc, int index1, float scale);
+    int Insert_Y(Vector2 loc, int index1, float scale);
+    void Insert_4Way(Vector2 loc, int index1, float scale);
+    void Offset_4Way(TRoadPt *pc1, TRoadPt *pc2, TRoadPt *pc3, TRoadPt *pr3, TRoadPt *pc4, Vector2 loc, Vector2 alignVector,
         float widthInTexture);
-    void offset3Way(
+    void Offset_3Way(
         TRoadPt *pc1, TRoadPt *pc2, TRoadPt *pc3, Vector2 loc, Vector2 upVector, Vector2 teeVector, float widthInTexture);
-    void offsetY(TRoadPt *pc1, TRoadPt *pc2, TRoadPt *pc3, Vector2 loc, Vector2 upVector, float widthInTexture);
-    void offsetH(TRoadPt *pc1, TRoadPt *pc2, TRoadPt *pc3, Vector2 loc, Vector2 upVector, Vector2 teeVector, int flip,
+    void Offset_Y(TRoadPt *pc1, TRoadPt *pc2, TRoadPt *pc3, Vector2 loc, Vector2 upVector, float widthInTexture);
+    void Offset_H(TRoadPt *pc1, TRoadPt *pc2, TRoadPt *pc3, Vector2 loc, Vector2 upVector, Vector2 teeVector, int flip,
         int mirror, float widthInTexture);
-    void preloadRoadsInVertexAndIndexBuffers();
-    void preloadRoadSegment(RoadSegment *pRoad);
-    void loadCurve(RoadSegment *pRoad, Vector2 loc1, Vector2 loc2, float scale);
-    void loadTee(RoadSegment *pRoad, Vector2 loc1, Vector2 loc2, int is4Way, float scale);
-    void loadY(RoadSegment *pRoad, Vector2 loc1, Vector2 loc2, float scale);
-    void loadAlphaJoin(RoadSegment *pRoad, Vector2 loc1, Vector2 loc2, float scale);
-    void loadH(RoadSegment *pRoad, Vector2 loc1, Vector2 loc2, int flip, float scale);
-    void loadFloatSection(RoadSegment *pRoad, Vector2 loc, Vector2 roadVector, float halfHeight, float left, float right,
+    void Preload_Roads_In_Vertex_And_Index_Buffers();
+    void Preload_Road_Segment(RoadSegment *pRoad);
+    void Load_Curve(RoadSegment *pRoad, Vector2 loc1, Vector2 loc2, float scale);
+    void Load_Tee(RoadSegment *pRoad, Vector2 loc1, Vector2 loc2, int is4Way, float scale);
+    void Load_Y(RoadSegment *pRoad, Vector2 loc1, Vector2 loc2, float scale);
+    void Load_Alpha_Join(RoadSegment *pRoad, Vector2 loc1, Vector2 loc2, float scale);
+    void Load_H(RoadSegment *pRoad, Vector2 loc1, Vector2 loc2, int flip, float scale);
+    void Load_Float_Section(RoadSegment *pRoad, Vector2 loc, Vector2 roadVector, float halfHeight, float left, float right,
         float uOffset, float vOffset, float scale);
-    void loadFloat4PtSection(RoadSegment *pRoad, Vector2 loc, Vector2 roadNormal, Vector2 roadVector, Vector2 *cornersP,
+    void Load_Float_4Pt_Section(RoadSegment *pRoad, Vector2 loc, Vector2 roadNormal, Vector2 roadVector, Vector2 *cornersP,
         float uOffset, float vOffset, float uScale, float vScale);
-    void loadLit4PtSection(RoadSegment *pRoad, unsigned short *ib, VertexFormatXYZDUV1 *vb,
+    void Load_Lit_4Pt_Section(RoadSegment *pRoad, unsigned short *ib, VertexFormatXYZDUV1 *vb,
         RefMultiListIterator<RenderObjClass> *pDynamicLightsIterator);
-    void loadRoadsInVertexAndIndexBuffers();
-    void loadLitRoadsInVertexAndIndexBuffers(RefMultiListIterator<RenderObjClass> *pDynamicLightsIterator);
-    void loadRoadSegment(unsigned short *ib, VertexFormatXYZDUV1 *vb, RoadSegment *pRoad);
-    void allocateRoadBuffers();
-    void freeRoadBuffers();
-    void rotateAbout(Vector2 *ptP, Vector2 center, float angle);
-    bool visibilityChanged(const IRegion2D &region);
-    void updateCenter();
-    void setDirty();
+    void Load_Roads_In_Vertex_And_Index_Buffers();
+    void Load_Lit_Roads_In_Vertex_And_Index_Buffers(RefMultiListIterator<RenderObjClass> *pDynamicLightsIterator);
+    void Load_Road_Segment(unsigned short *ib, VertexFormatXYZDUV1 *vb, RoadSegment *pRoad);
+    void Allocate_Road_Buffers();
+    void Free_Road_Buffers();
+    void Rotate_About(Vector2 *ptP, Vector2 center, float angle);
+    bool Visibility_Changed(const IRegion2D &region);
+    void Update_Center();
+    void Set_Dirty();
 
 private:
     RoadType *m_roadTypes;
